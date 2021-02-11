@@ -1,0 +1,23 @@
+@import "./utils/mixins.scss";
+
+@mixin tusg($breakpoints: (
+    xl 1200px 40px,
+    lg 1024px 32px,
+    md 768px 16px,
+    sm 480px 8px
+  ), $columns: 12) {
+  
+  @include makeVariablles();
+
+  .grid {
+    margin: 0 calc(var(--gutter)/2 * -1);
+  }
+
+  @include makeColumns("", $columns);
+
+  @each $size, $breakpoint in $breakpoints {
+    @media (max-width: $breakpoint) {
+      @include makeColumns($size + '-', $columns);
+    }
+  }
+}
