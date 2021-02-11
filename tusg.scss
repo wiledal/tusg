@@ -1,0 +1,48 @@
+@mixin tusg-print-variables ($breakpoints) {
+  :root {
+    --grid-gutter: 40px;
+    
+    @each $size, $breakpoint, $gutter in $breakpoints {
+      @media (max-width: $breakpoint) {
+        --grid-gutter: #{$gutter};
+      }
+    }
+  }
+}
+
+@mixin tusg-print-columns ($size: "", $columns) {
+  @for $x from 1 through $columns {
+    @for $y from 1 through $columns {
+      @if $y >= $x {
+        .grid__#{$size}col-#{$x}\/#{$y} {
+          flex: 0 0 ($x / $y * 100%);
+          padding: 0 calc(var(--grid-gutter) / 2);
+        } 
+      }
+    }
+  }
+}
+
+@mixin tusg($breakpoints: (
+    xl 1200px 40px,
+    lg 1024px 32px,
+    md 768px 16px,
+    sm 480px 8px
+  ), $columns: 12) {
+  
+  @include tusg-print-variables($breakpoints);
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 calc(var(--grid-gutter)/2 * -1);
+  }
+
+  @include tusg-print-columns ("", $columns);
+
+  @each $size, $breakpoint in $breakpoints {
+    @media (max-width: $breakpoint) {
+      @include tusg-print-columns ($size + '-', $columns);
+    }
+  }
+}
