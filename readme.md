@@ -40,7 +40,7 @@ Grids within grids:
     This container is 6 columns on the main grid.
 
     <div class="grid">
-      <div class="grid__item grid__col-4/6">
+      <div class="grid__col-4/6">
         This container is 4 columns on the main grid.
       </div>
     </div>
